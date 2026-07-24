@@ -33,4 +33,5 @@ include(
     ":feature:library",
     ":feature:projects",
     ":feature:settings",
+":feature:onboarding",
 )
