@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        This app is dark-mode-first by design (Section 4.1) and does not
+        support a light theme, so we base directly on the NoActionBar dark
+        variant rather than DayNight. All real visual theming (glass
+        surfaces, ambient background, typography, color tokens) lives in
+        Compose via TextureForgeTheme; this XML theme only needs to set the
+        window background before the first Compose frame draws, to avoid a
+        white flash on cold start.
+    -->
+    <style name="Theme.TextureForgeAI" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">@color/canvas_base</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

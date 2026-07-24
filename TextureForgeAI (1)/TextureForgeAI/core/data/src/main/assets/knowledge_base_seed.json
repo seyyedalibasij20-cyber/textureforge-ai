@@ -1,0 +1,112 @@
+[
+  {
+    "id": "pbr-fundamentals-001",
+    "title": "PBR Fundamentals: The Metallic/Roughness Workflow",
+    "category": null,
+    "subcategory": "PBR Fundamentals",
+    "body": "Physically Based Rendering represents surfaces with Base Color, Metallic, and Roughness maps under the metal/rough workflow used by Unreal, Unity, and Substance. Metallic is nearly binary in practice (0 or 1 for most real materials, with only a few transitional pixels at edges/rust). Roughness controls the microfacet distribution of the surface and drives how sharp or diffuse specular reflections appear.",
+    "tags": ["pbr", "metallic", "roughness", "fundamentals"],
+    "relatedIds": ["texture-channels-001"],
+    "confidenceSource": "VERIFIED",
+    "version": 1
+  },
+  {
+    "id": "texture-channels-001",
+    "title": "Texture Channel Reference",
+    "category": null,
+    "subcategory": "Channel Reference",
+    "body": "Base Color: albedo with no baked lighting. Roughness: grayscale microsurface detail. Metallic: grayscale, near-binary. Normal: tangent-space RGB encoding surface direction (OpenGL vs DirectX Y-channel differs). Height: grayscale displacement/parallax source. Ambient Occlusion: grayscale contact shadowing, never baked into Base Color. Emission: HDR-capable self-illumination. ORM: Occlusion/Roughness/Metallic packed into R/G/B of a single texture, common in glTF and Unreal mobile pipelines.",
+    "tags": ["channels", "orm", "normal", "height", "ao"],
+    "relatedIds": ["pbr-fundamentals-001"],
+    "confidenceSource": "VERIFIED",
+    "version": 1
+  },
+  {
+    "id": "material-stone-001",
+    "title": "Stone & Rock Material Notes",
+    "category": "STONE",
+    "subcategory": "Real-World Reference",
+    "body": "Stone surfaces are typically fully dielectric (Metallic = 0). Roughness varies widely: polished marble sits low (0.1-0.3), weathered granite or sandstone sits high (0.6-0.9). Watch for baked AO in Base Color from poorly-lit source photography, which flattens the material under new lighting.",
+    "tags": ["stone", "rock", "granite", "marble"],
+    "relatedIds": ["pbr-fundamentals-001"],
+    "confidenceSource": "AI_ASSISTED",
+    "version": 1
+  },
+  {
+    "id": "material-metal-001",
+    "title": "Metal Material Notes",
+    "category": "METAL",
+    "subcategory": "Real-World Reference",
+    "body": "Raw, unpainted metal is Metallic = 1 with Base Color driven by the metal's reflectance color rather than a diffuse albedo. Painted or rusted metal is a mixed/layered material: painted regions read as dielectric (Metallic near 0) while exposed metal or scratches spike back to 1. Roughness is the primary read for wear.",
+    "tags": ["metal", "rust", "paint", "reflectance"],
+    "relatedIds": ["pbr-fundamentals-001"],
+    "confidenceSource": "AI_ASSISTED",
+    "version": 1
+  },
+  {
+    "id": "material-wood-001",
+    "title": "Wood Material Notes",
+    "category": "WOOD",
+    "subcategory": "Real-World Reference",
+    "body": "Wood is dielectric (Metallic = 0). Varnished/lacquered wood has low, uniform roughness with a subtle clearcoat-like specular response; raw or weathered wood has higher, more variable roughness following the grain direction, which should also drive normal map detail.",
+    "tags": ["wood", "varnish", "grain"],
+    "relatedIds": ["pbr-fundamentals-001"],
+    "confidenceSource": "AI_ASSISTED",
+    "version": 1
+  },
+  {
+    "id": "material-fabric-001",
+    "title": "Fabric Material Notes",
+    "category": "FABRIC",
+    "subcategory": "Real-World Reference",
+    "body": "Fabrics are dielectric with consistently high roughness. Fine weave detail is usually better represented in the normal and height maps than by fighting for it in Base Color resolution. Consider a dedicated sheen/fuzz shader model for velvet or felt where standard PBR under-represents grazing-angle brightness.",
+    "tags": ["fabric", "cloth", "sheen"],
+    "relatedIds": ["pbr-fundamentals-001"],
+    "confidenceSource": "AI_ASSISTED",
+    "version": 1
+  },
+  {
+    "id": "substance-painter-001",
+    "title": "Substance Painter Production Notes",
+    "category": null,
+    "subcategory": "Substance Painter",
+    "body": "Bake mesh maps (AO, curvature, position, normal) before hand-painting masks so generators and smart materials respond correctly to edges and cavities. Export presets should match the target engine's channel packing exactly (e.g., Unreal's ORM packing) to avoid a manual repack step.",
+    "tags": ["substance painter", "baking", "export presets"],
+    "relatedIds": ["texture-channels-001"],
+    "confidenceSource": "VERIFIED",
+    "version": 1
+  },
+  {
+    "id": "substance-designer-001",
+    "title": "Substance Designer Production Notes",
+    "category": null,
+    "subcategory": "Substance Designer",
+    "body": "Favor procedural, resolution-independent graphs for tileable base materials so the same graph can be re-exported at multiple target resolutions without redoing work. Keep height/displacement ranges physically plausible relative to the mesh scale to avoid exaggerated parallax artifacts.",
+    "tags": ["substance designer", "tileable", "procedural"],
+    "relatedIds": ["texture-channels-001"],
+    "confidenceSource": "VERIFIED",
+    "version": 1
+  },
+  {
+    "id": "unreal-optimization-001",
+    "title": "Unreal Engine Texture Optimization Notes",
+    "category": null,
+    "subcategory": "Unreal Engine",
+    "body": "Pack Occlusion/Roughness/Metallic into a single ORM texture to cut one full texture sample per material on mobile and console. Use BC7 for high-fidelity Base Color/Normal on PC/console, and ASTC on mobile. Keep Normal maps uncompressed or BC5 to avoid banding.",
+    "tags": ["unreal", "orm", "compression", "mobile"],
+    "relatedIds": ["texture-channels-001"],
+    "confidenceSource": "VERIFIED",
+    "version": 1
+  },
+  {
+    "id": "unity-optimization-001",
+    "title": "Unity Texture Optimization Notes",
+    "category": null,
+    "subcategory": "Unity",
+    "body": "Unity's Standard/URP metallic workflow expects Metallic in the Red channel and Smoothness (inverse roughness) in the Alpha channel of the same texture, which is a common source of inverted-roughness bugs when importing assets authored for the roughness convention elsewhere.",
+    "tags": ["unity", "smoothness", "metallic"],
+    "relatedIds": ["texture-channels-001"],
+    "confidenceSource": "VERIFIED",
+    "version": 1
+  }
+]
